@@ -1,11 +1,12 @@
 // 1. Import express and create a server instance and port
 const express = require('express')
 const server = express()
+const helmet = require('helmet')
 const port = process.env.port || 3000
 
 // import router
 const router = require('./app/routes/router')
-const { default: helmet } = require('helmet')
+
 
 // increase security using helmet
 server.use(helmet()).use(express.json()).use('/', router)
@@ -19,6 +20,8 @@ server.get('/api', (req, res)=> {
         'All Films': `http://localhost:${port}/api/film`,
     })
 })
+
+server.set('view engine', 'ejs')
 // 2. Listen on the port
 // .listen(port, callback function)
 server.listen(port, ()=> console.log(`Let's get this PORTY started in room ${port}...`))
